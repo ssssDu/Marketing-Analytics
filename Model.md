@@ -22,11 +22,6 @@ library(caret)
 ```
 
 ## Data cleaning, basic intergrity check and dummy-coding
-Integrity confirmation: 
-open.rate, click.rate average_order_value customer_metrics_orders last_order_to_today 
-domain: non-negative
-open.rate, click.rate <=1 (pre-checked)
-customer_metrics_orders is int
 
 ```{r, warning = FALSE}
 

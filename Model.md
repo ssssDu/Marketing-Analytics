@@ -41,7 +41,7 @@ unsub_data = unsub_data[,c(-1,-2)]
 
 ```
 
-### two steps logit-OLS model<p>
+### Two steps logit-OLS model<p>
 
 #### Choise-based Logistic Regression<br>
 Model onto two subset: active respondent and unsubscribe respondent

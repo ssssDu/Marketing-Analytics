@@ -3,14 +3,13 @@ title: "Marketing_Project"
 output: html_document
 ---
 
-##Fitting a explanatory model for email open rate based on demographic information of respondent
+## Fitting a explanatory model for email open rate based on demographic information of respondent
 
 
-####The data is highly skewed and cannot be transformed directly with BOXCOX since dependent variables contain zeros. We first tried fitting a regression model with all variables and yielded R-sq of 0.5%.The poor performance may due to the violation of residual assumption. To transform and fix the assumption violation, we seek to exclude zeros in the depedent variable.<br> 
+#### The data is highly skewed and cannot be transformed directly with BOXCOX since dependent variables contain zeros. We first tried fitting a regression model with all variables and yielded R-sq of 0.5%.The poor performance may due to the violation of residual assumption. To transform and fix the assumption violation, we seek to exclude zeros in the depedent variable.<br> 
 
-####The concept is to use the two-stage tobit model. We first used the choice-based logistic model to predict open rate. As can be seen from the result in conversion matrix, the model performs poorly. After that, we exclude customers that have zero open rates and run linear regression on the rest of customers to predict their open rate. We compared our results of linear regression with and without box-cox transformation. With the box-cox transformation before the linear model, the R^2 increased and is now 14% and 8% for active and unsubscribe customers respectively. <br>
+#### The concept is to use the two-stage tobit model. We first used the choice-based logistic model to predict open rate. As can be seen from the result in conversion matrix, the model performs poorly. After that, we exclude customers that have zero open rates and run linear regression on the rest of customers to predict their open rate. We compared our results of linear regression with and without box-cox transformation. With the box-cox transformation before the linear model, the R^2 increased and is now 14% and 8% for active and unsubscribe customers respectively. <br>
 
-<br>
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
@@ -22,7 +21,7 @@ library(forecast)
 library(caret)
 ```
 
-###Data cleaning, basic intergrity check and dummy-coding
+## Data cleaning, basic intergrity check and dummy-coding
 integrity confirmation: 
 open.rate, click.rate average_order_value customer_metrics_orders last_order_to_today 
 domain: non-negative
@@ -47,9 +46,9 @@ unsub_data = unsub_data[,c(-1,-2)]
 
 ```
 
-###two steps logit-OLS model<p>
+### two steps logit-OLS model<p>
 
-####Choise-based Logistic Regression<br>
+#### Choise-based Logistic Regression<br>
 Model onto two subset: active respondent and unsubscribe respondent
 
 ```{r,  warning = FALSE}
@@ -86,11 +85,11 @@ offset = log((1-popu_cor)*(samp_cor)/(1-samp_cor)/(popu_cor))
 logit_unsub$coefficients[1] = logit_unsub$coefficients[1] -offset
 
 ```
-<p>
-Cut-off Threshold selection to test choiced-based logistic model predictive accuracy
+
+#### Cut-off Threshold selection to test choiced-based logistic model predictive accuracy
 ```{r, warning = FALSE}
 
-##active
+#active
 #baseline: 0.847
 for (thres in c(0.1,0.3,0.5,0.7,0.9)){
   pred = vector()
@@ -122,8 +121,8 @@ for (thres in c(0.1,0.3,0.5,0.7,0.9)){
 
 ```
 
-####Linear Regression in condition of logistic model<br>
-Fit linear model onto active and unsubscribe datasets after boxcox transformation to fit residual assumption. 
+### Linear Regression in condition of logistic model<br>
+#### Fit linear model onto active and unsubscribe datasets after boxcox transformation to fit residual assumption. 
 ```{r,warning = FALSE}
 
 #Active - no boxcox Linear Model

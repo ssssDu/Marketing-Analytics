@@ -124,7 +124,7 @@ for (thres in c(0.1,0.3,0.5,0.7,0.9)){
 act_data_linear = act_data[which(act_data$Open.Rate != 0),]
 pre_lm = lm(Open.Rate~., data= act_data_linear)
 summary(pre_lm)
-#Active - no boxcox Linear Model
+#Active - boxcox Linear Model
 bc<-boxcox(pre_lm, plotit = F)
 lambda <- bc$lambda[which.max(bc$objective)]
 act_data_linear$Open.Rate = BoxCox(act_data_linear$Open.Rate, lambda)
@@ -135,7 +135,7 @@ summary(bc_lm)
 unsub_data_linear = unsub_data[which(unsub_data$Open.Rate != 0),]
 pre_lm = lm(Open.Rate~., data= unsub_data_linear)
 summary(pre_lm)
-#unsubscribe - no boxcox Linear Model
+#unsubscribe - boxcox Linear Model
 bc<-boxcox(pre_lm, plotit = F)
 lambda <- bc$lambda[which.max(bc$objective)]
 unsub_data_linear$Open.Rate = BoxCox(unsub_data_linear$Open.Rate, lambda)
